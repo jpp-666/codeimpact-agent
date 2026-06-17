@@ -15,7 +15,7 @@ The positioning should be conservative:
 
 Current verification state:
 
-- Test suite: `27 passed, 2 warnings`
+- Test suite: `28 passed, 2 warnings`
 - Eval rows: `9`
 - `changed_file_hit_rate`: `1.0`
 - `related_file_hit_rate`: `0.6666666666666666`

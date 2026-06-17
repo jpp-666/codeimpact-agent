@@ -12,7 +12,7 @@ python -m pytest tests\codeimpact -q
 
 Result:
 
-- 27 passed
+- 28 passed
 - 2 warnings from external dependencies
 
 ## 2. Evaluation harness
