@@ -4,7 +4,16 @@ repo,diff_file,expected_changed,expected_related,expected_context_files,query
 ./sample_repo,./sample_init.diff,pkg/__init__.py,app.py,docs/usage.md;tests/test_app.py;README.md,package export run app
 ./sample_repo,./sample_dyn.diff,pkg/core.py,dyn_loader.py,docs/usage.md;tests/test_core.py,dynamic import core run
 ./sample_repo,./sample_util.diff,pkg/util.py,dyn_loader.py,tests/test_util.py;README.md,helper dynamic primitive
-./sample_repo,./sample_app.diff,app.py,pkg/__init__.py,tests/test_app.py;docs/usage.md;README.md,app main package run
+./sample_repo,./sample_app.diff,app.py,tests/test_app.py,tests/test_app.py;docs/usage.md;README.md,app main package run
 ./sample_repo,./sample_readme.diff,README.md,,pkg/core.py;tests/test_core.py,package api test coverage run
 ./sample_repo,./sample_docs.diff,docs/usage.md,,app.py;tests/test_app.py,usage public api app main
 ./sample_repo,./sample_test_core.diff,tests/test_core.py,,pkg/core.py;README.md,test run expected core
+./sample_repo,./sample_service.diff,pkg/service.py,pkg/api.py,tests/test_service.py;docs/service.md;cli.py,service summarize payload command
+./sample_repo,./sample_api.diff,pkg/api.py,cli.py,tests/test_cli.py;docs/service.md;README.md,api payload command cli
+./sample_repo,./sample_cli.diff,cli.py,tests/test_cli.py,tests/test_cli.py;README.md;docs/service.md,cli command returns run
+./sample_repo,./sample_config.diff,config.py,,README.md;docs/usage.md,feature flag timeout config
+./sample_repo,./sample_plugin_loader.diff,plugin_loader.py,,pkg/service.py;tests/test_service.py,plugin loader service summarize
+./sample_repo,./sample_test_service.diff,tests/test_service.py,,pkg/service.py;docs/service.md,test service summarize
+./sample_repo,./sample_service_docs.diff,docs/service.md,,pkg/service.py;tests/test_service.py,service api summary docs
+./sample_repo,./sample_core_contract.diff,pkg/core.py,pkg/service.py,tests/test_service.py;pkg/api.py;docs/service.md,core run service summarize
+./sample_repo,./sample_util_contract.diff,pkg/util.py,pkg/service.py,tests/test_util.py;pkg/core.py;docs/service.md,helper util service summarize

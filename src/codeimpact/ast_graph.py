@@ -152,6 +152,8 @@ def _current_package(module_name: str, path: Path) -> str:
 
 
 def _resolve_relative(module_name: str, path: Path, level: int, target: str | None) -> str:
+    if level == 0:
+        return target or ""
     package = _current_package(module_name, path)
     package_parts = package.split(".") if package else []
     if level > len(package_parts) + 1:

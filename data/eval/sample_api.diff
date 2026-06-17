@@ -1,0 +1,9 @@
+diff --git a/pkg/api.py b/pkg/api.py
+--- a/pkg/api.py
++++ b/pkg/api.py
+@@ -2,4 +2,4 @@ from .service import summarize
+ 
+ 
+ def payload():
+-    return summarize()
++    return {"data": summarize()}

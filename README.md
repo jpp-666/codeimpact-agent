@@ -29,7 +29,7 @@ Trimmed output:
   ],
   "related_files": [
     {
-      "path": "C:\\Users\\29738\\Desktop\\github\\rca\\src\\baselines\\__init__.py",
+      "path": "<path-to-python-repo>\\src\\baselines\\__init__.py",
       "reason": "reverse import dependency",
       "depth": 1
     }
@@ -70,7 +70,7 @@ Trimmed output:
   "retrieval_ms": 3.2,
   "test_suggestions": [
     "Run unit tests covering `src/models/router.py`",
-    "Run downstream regression tests for: C:\\Users\\29738\\Desktop\\github\\rca\\src\\baselines\\__init__.py"
+    "Run downstream regression tests for: <path-to-python-repo>\\src\\baselines\\__init__.py"
   ]
 }
 ```
@@ -164,13 +164,13 @@ Expected evaluation shape:
 
 ```json
 {
-  "total": 9,
+  "total": 18,
   "changed_file_hit_rate": 1.0,
-  "related_file_hit_rate": 0.6666666666666666,
-  "retrieval_hit_rate": 0.4444444444444444,
-  "context_recall_at_5": 0.2857142857142857,
-  "context_precision_at_5": 0.21428571428571427,
-  "context_mrr_at_5": 0.48148148148148157
+  "related_file_hit_rate": 0.8888888888888888,
+  "retrieval_hit_rate": 0.5555555555555556,
+  "context_recall_at_5": 0.22727272727272727,
+  "context_precision_at_5": 0.14925373134328357,
+  "context_mrr_at_5": 0.33333333333333326
 }
 ```
 

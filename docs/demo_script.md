@@ -55,7 +55,7 @@ Trimmed output to show:
   ],
   "related_files": [
     {
-      "path": "C:\\Users\\29738\\Desktop\\github\\rca\\src\\baselines\\__init__.py",
+      "path": "<path-to-python-repo>\\src\\baselines\\__init__.py",
       "reason": "reverse import dependency",
       "depth": 1
     }
@@ -88,7 +88,7 @@ Trimmed output to show:
   "retrieval_ms": 3.2,
   "test_suggestions": [
     "Run unit tests covering `src/models/router.py`",
-    "Run downstream regression tests for: C:\\Users\\29738\\Desktop\\github\\rca\\src\\baselines\\__init__.py"
+    "Run downstream regression tests for: <path-to-python-repo>\\src\\baselines\\__init__.py"
   ]
 }
 ```
@@ -132,7 +132,7 @@ Trimmed output fields to show when present:
   "risk_source": "fallback",
   "memory_context": [
     {
-      "source": "C:\\Users\\29738\\Desktop\\github\\rca",
+      "source": "<path-to-python-repo>",
       "risk_level": "medium",
       "risk_reasoning": "AST found 1 reverse dependencies for the touched module(s); downstream tests should be prioritized."
     }
@@ -181,7 +181,7 @@ Suggested MCP demo input for `analyze_diff`:
 
 ```json
 {
-  "repo": "C:\\Users\\29738\\Desktop\\github\\rca",
+  "repo": "<path-to-python-repo>",
   "diff_text": "<paste contents of docs\\rca_e677b29.diff>"
 }
 ```
@@ -220,13 +220,13 @@ Expected output:
 
 ```json
 {
-  "total": 9,
+  "total": 18,
   "changed_file_hit_rate": 1.0,
-  "related_file_hit_rate": 0.6666666666666666,
-  "retrieval_hit_rate": 0.4444444444444444,
-  "context_recall_at_5": 0.2857142857142857,
-  "context_precision_at_5": 0.21428571428571427,
-  "context_mrr_at_5": 0.48148148148148157
+  "related_file_hit_rate": 0.8888888888888888,
+  "retrieval_hit_rate": 0.5555555555555556,
+  "context_recall_at_5": 0.22727272727272727,
+  "context_precision_at_5": 0.14925373134328357,
+  "context_mrr_at_5": 0.33333333333333326
 }
 ```
 
@@ -239,7 +239,7 @@ How to explain the metrics:
 
 Important framing:
 
-> The eval set is a small regression harness, not a statistical benchmark. The related-file score is intentionally below 1.0 because the sample includes dynamic imports that static AST cannot fully resolve. I kept those misses to show known limitations instead of reporting fake-perfect numbers.
+> The 18-row eval set is a small regression harness, not a statistical benchmark. The related-file score is intentionally below 1.0 because the sample includes dynamic imports that static AST cannot fully resolve. I kept those misses to show known limitations instead of reporting fake-perfect numbers.
 
 ## 6. Three-Minute Talk Track
 
@@ -253,7 +253,7 @@ Minute 2: Architecture
 
 Minute 3: Agent Fit
 
-> It uses LangGraph for stateful orchestration, FastMCP for tool exposure, SQLite Memory for historical context, and an OpenAI-compatible LLM call for rubric-based risk, review-focus, and test-focus reasoning. The current limitation is static AST coverage and small eval size; the next improvement would be a larger labeled diff set.
+> It uses LangGraph for stateful orchestration, FastMCP for tool exposure, SQLite Memory for historical context, and an OpenAI-compatible LLM call for rubric-based risk, review-focus, and test-focus reasoning. The current limitation is static AST coverage and small eval size; the next improvement would be a larger labeled diff set from real commits.
 
 ## 7. Questions To Be Ready For
 

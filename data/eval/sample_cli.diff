@@ -1,0 +1,9 @@
+diff --git a/cli.py b/cli.py
+--- a/cli.py
++++ b/cli.py
+@@ -2,4 +2,4 @@ from pkg.api import payload
+ 
+ 
+ def command():
+-    return payload()["run"]
++    return int(payload()["run"])

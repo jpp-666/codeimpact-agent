@@ -1,0 +1,9 @@
+diff --git a/pkg/service.py b/pkg/service.py
+--- a/pkg/service.py
++++ b/pkg/service.py
+@@ -3,4 +3,4 @@ from .util import helper
+ 
+ 
+ def summarize():
+-    return {"run": run(), "helper": helper()}
++    return {"run": run(), "helper": helper(), "status": "ok"}

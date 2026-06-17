@@ -12,7 +12,7 @@ python -m pytest tests\codeimpact -q
 
 Result:
 
-- 28 passed
+- 29 passed
 - 2 warnings from external dependencies
 
 ## 2. Evaluation harness
@@ -27,20 +27,20 @@ Result:
 
 ```json
 {
-  "total": 9,
+  "total": 18,
   "changed_file_hit_rate": 1.0,
-  "related_file_hit_rate": 0.6666666666666666,
-  "retrieval_hit_rate": 0.4444444444444444,
-  "context_recall_at_5": 0.2857142857142857,
-  "context_precision_at_5": 0.21428571428571427,
-  "context_mrr_at_5": 0.48148148148148157
+  "related_file_hit_rate": 0.8888888888888888,
+  "retrieval_hit_rate": 0.5555555555555556,
+  "context_recall_at_5": 0.22727272727272727,
+  "context_precision_at_5": 0.14925373134328357,
+  "context_mrr_at_5": 0.33333333333333326
 }
 ```
 
 Notes:
 
 - `related_file_hit_rate` is intentionally below 1.0 to keep the benchmark honest.
-- The sample set includes a dynamic-import miss so the metric reflects a real weakness.
+- The 18-row sample set includes dynamic-import and lexical-retrieval misses so the metrics reflect real weaknesses.
 - `retrieval_hit_rate` now checks whether the expected related file appears in the retrieved top-k paths.
 - `context_*` metrics are strict path-level retrieval checks against labeled `expected_context_files`.
 

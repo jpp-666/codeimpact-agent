@@ -1,0 +1,9 @@
+diff --git a/plugin_loader.py b/plugin_loader.py
+--- a/plugin_loader.py
++++ b/plugin_loader.py
+@@ -4,4 +4,4 @@ service = importlib.import_module("pkg.service")
+ 
+ 
+ def load_summary():
+-    return service.summarize()
++    return dict(service.summarize())

@@ -1,0 +1,7 @@
+diff --git a/pkg/util.py b/pkg/util.py
+--- a/pkg/util.py
++++ b/pkg/util.py
+@@ -1,2 +1,2 @@
+ def helper():
+-    return 1
++    return 2

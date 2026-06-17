@@ -1,0 +1,7 @@
+diff --git a/config.py b/config.py
+--- a/config.py
++++ b/config.py
+@@ -1,2 +1,2 @@
+ FEATURE_FLAG = True
+-TIMEOUT_SECONDS = 10
++TIMEOUT_SECONDS = 20

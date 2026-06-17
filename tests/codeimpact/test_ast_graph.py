@@ -49,3 +49,19 @@ def test_dependency_graph_handles_relative_imports(tmp_path: Path) -> None:
 
     assert "service.py" in related_paths
     assert "wrapper.py" in related_paths
+
+
+def test_dependency_graph_handles_absolute_from_imports_in_test_modules(tmp_path: Path) -> None:
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    (repo / "pkg").mkdir()
+    (repo / "tests").mkdir()
+    (repo / "pkg" / "__init__.py").write_text("", encoding="utf-8")
+    (repo / "pkg" / "core.py").write_text("def run():\n    return 1\n", encoding="utf-8")
+    (repo / "tests" / "test_core.py").write_text("from pkg.core import run\n", encoding="utf-8")
+
+    graph = build_python_dependency_graph(repo)
+    related = graph.related_files([repo / "pkg" / "core.py"], max_depth=2)
+    related_paths = {Path(item.path).relative_to(repo).as_posix() for item in related}
+
+    assert "tests/test_core.py" in related_paths
