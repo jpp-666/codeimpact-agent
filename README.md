@@ -124,7 +124,7 @@ Optional LLM configuration:
 ```powershell
 $env:CODEIMPACT_ENABLE_LLM="1"
 $env:OPENAI_API_BASE="https://api.example.com/v1"
-$env:OPENAI_API_KEY="sk-..."
+$env:OPENAI_API_KEY="<your-api-key>"
 $env:OPENAI_CHAT_MODEL="your-model"
 ```
 
@@ -141,7 +141,7 @@ Require a real LLM call for interview demos:
 ```powershell
 $env:CODEIMPACT_ENABLE_LLM="1"
 $env:OPENAI_API_BASE="https://api.example.com/v1"
-$env:OPENAI_API_KEY="sk-..."
+$env:OPENAI_API_KEY="<your-api-key>"
 $env:OPENAI_CHAT_MODEL="your-model"
 python -m codeimpact analyze --repo <path-to-python-repo> --diff docs\rca_e677b29.diff --require-llm
 ```
@@ -240,7 +240,7 @@ See [docs/verification_evidence.md](docs/verification_evidence.md) for reproduci
 - a real repository analysis case
 - an example LLM-backed risk reasoning sample
 
-For an interview walkthrough, use [docs/demo_script.md](docs/demo_script.md).
+For an interview walkthrough, use [docs/demo_script.md](docs/demo_script.md). For conservative resume wording, use [docs/resume_package_zh.md](docs/resume_package_zh.md).
 
 ## Scope and Known Limits
 

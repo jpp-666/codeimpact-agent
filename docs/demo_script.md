@@ -20,7 +20,7 @@ Optional LLM environment:
 ```powershell
 $env:CODEIMPACT_ENABLE_LLM="1"
 $env:OPENAI_API_BASE="https://api.example.com/v1"
-$env:OPENAI_API_KEY="sk-..."
+$env:OPENAI_API_KEY="<your-api-key>"
 $env:OPENAI_CHAT_MODEL="your-model"
 ```
 

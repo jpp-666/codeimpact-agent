@@ -93,23 +93,27 @@ This is not a fatal flaw if you explain it as a known boundary.
 
 ## Resume Wording
 
-Recommended version:
+Recommended Agent-role version:
 
 ```text
-CodeImpact Agent - Python Code Change Impact Analysis Agent Backend
+CodeImpact Agent｜代码变更影响分析 Agent 后端
+独立开发｜Python / LangGraph / FastMCP / OpenAI SDK / FastAPI / SQLite
 
-- Built a LangGraph state-machine workflow that turns git diff input into a structured impact report, including changed files, downstream related files, retrieved context, risk level, review focus, and test focus.
-- Implemented Python AST reverse dependency analysis to trace downstream import impact across a repository, with explicit handling for normal imports, relative imports, string-literal dynamic imports, and package re-exports.
-- Added SQLite/FTS5-BM25 context retrieval over code, tests, README, and docs, then fed retrieved evidence plus diff hunk summaries into an OpenAI-compatible LLM risk assessor with JSON structured output and deterministic fallback.
-- Exposed the backend through 6 FastMCP tools, a FastAPI HTTP service, and a Typer CLI for local analysis, graph execution, and evaluation.
-- Designed an 18-row regression eval harness covering diff parsing, dependency discovery, and context retrieval; results intentionally expose AST and lexical retrieval limitations rather than reporting fake-perfect scores.
+- 基于 LangGraph StateGraph 实现 parse -> dependency -> retrieve_context -> reason_risk -> report 工作流，支持 Memory recall/store 和高风险分支路由，将单次 LLM 调用组织成可扩展的多步骤 Agent 后端。
+- 实现 Python AST 反向依赖图分析，支持普通 import、from import、相对导入、字符串字面量 importlib.import_module 和包 re-export，用于定位代码变更可能影响的下游模块。
+- 接入 OpenAI-compatible LLM API，使用 JSON structured output 约束 risk_level、risk_reasoning、test_focus、review_focus、confidence、assumptions 等字段；提供 deterministic fallback，并通过 --require-llm 保证面试 demo 能展示真实 LLM 调用。
+- 增加 SQLite Memory 和 SQLite FTS5/BM25 本地上下文检索，将代码、测试、README、docs 片段作为 LLM 风险判断证据；明确保留 lexical retrieval 的局限，不包装成高准确率 RAG。
+- 通过 FastMCP 暴露 6 个工具，同时提供 Typer CLI 和 FastAPI HTTP API，覆盖本地命令、Agent client 和服务化调用场景。
+- 设计 18 条样本回归评测集与 pytest/CI 验证，当前 changed_file_hit_rate=1.0、related_file_hit_rate=0.889、retrieval_hit_rate=0.556；保留动态 import 与词法检索 miss case，避免 fake-perfect 评测。
 ```
 
 Short version:
 
 ```text
-Built CodeImpact Agent, a Python code-change impact analysis backend using LangGraph, FastMCP, FastAPI, Python AST, SQLite/FTS5-BM25, and OpenAI-compatible LLM risk assessment. The system parses git diffs, traces downstream imports, retrieves code/test/doc context, recalls prior analysis memory, and returns structured risk reports through CLI, MCP tools, and HTTP API endpoints. Added an 18-row eval harness and pytest coverage for core paths.
+CodeImpact Agent 是一个 tool-first 代码变更影响分析 Agent 后端：先用 diff parser、Python AST 依赖图和 FTS5/BM25 检索提取代码证据，再通过 LangGraph 编排 Memory 与 OpenAI-compatible LLM 风险判断，最终通过 FastMCP、CLI 和 FastAPI 输出结构化 review/test focus。项目包含 18 条样本回归评测和 29 个 pytest 用例，指标用于验证核心链路并暴露静态分析与词法检索局限。
 ```
+
+See `docs/resume_package_zh.md` for the public-safe copy-paste resume package.
 
 ## Do Not Write
 
