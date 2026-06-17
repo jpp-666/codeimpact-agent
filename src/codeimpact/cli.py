@@ -25,6 +25,7 @@ def analyze(
     diff: Path | None = typer.Option(None, exists=True, file_okay=True, dir_okay=False, resolve_path=True),
     diff_text: str | None = typer.Option(None, help="Raw diff text, used when --diff is not provided."),
     json_output: bool = typer.Option(True, "--json/--no-json", help="Print JSON output."),
+    require_llm: bool = typer.Option(False, "--require-llm", help="Fail instead of using fallback when LLM assessment is unavailable."),
 ) -> None:
     if diff is not None:
         text = diff.read_text(encoding="utf-8")
@@ -43,7 +44,14 @@ def analyze(
         parsed,
         related,
         retrieved_context=[hit.to_dict(repo) for hit in retrieved.hits],
-    ) or fallback_risk_assessment(parsed, related)
+    )
+    if risk_assessment is None:
+        if require_llm:
+            raise typer.BadParameter(
+                "LLM assessment was required but unavailable. Set CODEIMPACT_ENABLE_LLM=1, "
+                "OPENAI_API_BASE, OPENAI_API_KEY, and OPENAI_CHAT_MODEL."
+            )
+        risk_assessment = fallback_risk_assessment(parsed, related)
     context_sources = ["AST reverse dependency"]
     if retrieved.hits:
         context_sources.append("RAG retrieved code/test/doc context")

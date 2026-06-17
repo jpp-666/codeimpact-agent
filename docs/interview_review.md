@@ -8,6 +8,7 @@ The positioning should be conservative:
 
 - Good: "Python code change impact analysis Agent backend"
 - Good: "LangGraph + AST reverse dependency analysis + MCP/FastAPI interfaces + LLM/fallback risk assessment"
+- Required for interview demo: show `risk_source=llm` by running `analyze --require-llm`
 - Avoid: "production-grade code review platform"
 - Avoid: "high-accuracy RAG system"
 - Avoid: "fully automated test generation"
@@ -124,6 +125,8 @@ Built CodeImpact Agent, a Python code-change impact analysis backend using LangG
 ### Why not just ask the LLM to review the diff?
 
 Because import relationships and changed-file extraction are better handled by deterministic tools. The LLM is used after evidence extraction, where it is stronger: risk reasoning, review focus, test focus, confidence, and assumptions.
+
+For a live Agent interview, do not only show fallback output. Use `--require-llm` so the command fails unless the model call succeeds, then point to `risk_source=llm`.
 
 ### Why is retrieval_hit_rate low?
 

@@ -136,6 +136,18 @@ Run the direct analyzer:
 python -m codeimpact analyze --repo <path-to-python-repo> --diff docs\rca_e677b29.diff
 ```
 
+Require a real LLM call for interview demos:
+
+```powershell
+$env:CODEIMPACT_ENABLE_LLM="1"
+$env:OPENAI_API_BASE="https://api.example.com/v1"
+$env:OPENAI_API_KEY="sk-..."
+$env:OPENAI_CHAT_MODEL="your-model"
+python -m codeimpact analyze --repo <path-to-python-repo> --diff docs\rca_e677b29.diff --require-llm
+```
+
+With `--require-llm`, the command fails instead of silently using fallback when the model call is unavailable. A successful interview demo should show `"risk_source": "llm"`.
+
 Run the LangGraph workflow, including Memory recall/store and conditional routing:
 
 ```powershell

@@ -31,14 +31,14 @@ If the explicit LLM switch or API variables are absent, the demo still works wit
 Command:
 
 ```powershell
-python -m codeimpact analyze --repo <path-to-python-repo> --diff docs\rca_e677b29.diff
+python -m codeimpact analyze --repo <path-to-python-repo> --diff docs\rca_e677b29.diff --require-llm
 ```
 
 What to point out:
 
 - `changed_files` comes from the diff parser.
 - `related_files` comes from AST reverse dependency analysis, not LLM guessing.
-- `risk_level`, `risk_reasoning`, and `risk_source` show whether the risk decision came from the LLM or fallback.
+- `risk_level`, `risk_reasoning`, and `risk_source` show whether the risk decision came from the LLM or fallback. For an Agent interview demo, run with `--require-llm` and show `risk_source: llm`.
 - `retrieved_context` and `context_sources` show the RAG layer: the model gets code/test/doc snippets before it reasons about risk.
 - `test_focus`, `review_focus`, `confidence`, `assumptions`, and `evidence` show the prompt-engineering layer: the model is constrained by a risk rubric and diff hunk evidence instead of free-form guessing.
 - `test_suggestions` are deterministic suggestions based on changed and downstream files.
@@ -61,7 +61,7 @@ Trimmed output to show:
     }
   ],
   "risk_level": "medium",
-  "risk_source": "fallback",
+  "risk_source": "llm",
   "risk_reasoning": "AST found 1 reverse dependencies for the touched module(s); downstream tests should be prioritized.",
   "test_focus": [
     "Run tests covering `src/models/router.py`",
