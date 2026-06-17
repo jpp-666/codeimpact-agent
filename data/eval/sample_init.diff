@@ -1,0 +1,6 @@
+diff --git a/pkg/__init__.py b/pkg/__init__.py
+--- a/pkg/__init__.py
++++ b/pkg/__init__.py
+@@ -1 +1,2 @@
+ from .core import run
++from .util import helper

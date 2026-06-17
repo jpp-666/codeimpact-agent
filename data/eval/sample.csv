@@ -1,0 +1,10 @@
+repo,diff_file,expected_changed,expected_related,expected_context_files,query
+./sample_repo,./sample_core.diff,pkg/core.py,pkg/__init__.py,tests/test_core.py;tests/test_app.py;README.md,helper run core package
+./sample_repo,./sample_util.diff,pkg/util.py,pkg/core.py,tests/test_util.py;README.md,helper primitive util
+./sample_repo,./sample_init.diff,pkg/__init__.py,app.py,docs/usage.md;tests/test_app.py;README.md,package export run app
+./sample_repo,./sample_dyn.diff,pkg/core.py,dyn_loader.py,docs/usage.md;tests/test_core.py,dynamic import core run
+./sample_repo,./sample_util.diff,pkg/util.py,dyn_loader.py,tests/test_util.py;README.md,helper dynamic primitive
+./sample_repo,./sample_app.diff,app.py,pkg/__init__.py,tests/test_app.py;docs/usage.md;README.md,app main package run
+./sample_repo,./sample_readme.diff,README.md,,pkg/core.py;tests/test_core.py,package api test coverage run
+./sample_repo,./sample_docs.diff,docs/usage.md,,app.py;tests/test_app.py,usage public api app main
+./sample_repo,./sample_test_core.diff,tests/test_core.py,,pkg/core.py;README.md,test run expected core

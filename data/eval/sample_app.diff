@@ -1,0 +1,9 @@
+diff --git a/app.py b/app.py
+--- a/app.py
++++ b/app.py
+@@ -1,4 +1,4 @@
+ from pkg import run
+ 
+ def main():
+-    return run()
++    return run() + 1

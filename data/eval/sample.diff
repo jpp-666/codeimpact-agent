@@ -1,0 +1,10 @@
+diff --git a/pkg/core.py b/pkg/core.py
+--- a/pkg/core.py
++++ b/pkg/core.py
+@@ -1,4 +1,4 @@
+ from .util import helper
+
+
+ def run():
+-    return helper() + 1
++    return helper() + 2

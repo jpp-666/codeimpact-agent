@@ -1,0 +1,11 @@
+diff --git a/docs/usage.md b/docs/usage.md
+--- a/docs/usage.md
++++ b/docs/usage.md
+@@ -1,6 +1,7 @@
+ # Usage
+ 
+ The package exports `run` from `pkg.__init__`.
++This usage note is the best place to check public API changes before merge.
+ 
+ `app.main()` depends on the package export and is a good regression target when core behavior changes.
+ 

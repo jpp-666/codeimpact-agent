@@ -1,0 +1,9 @@
+diff --git a/tests/test_core.py b/tests/test_core.py
+--- a/tests/test_core.py
++++ b/tests/test_core.py
+@@ -1,4 +1,4 @@
+ from pkg.core import run
+ 
+ def test_run_returns_expected_value():
+-    assert run() == 2
++    assert run() == 3
