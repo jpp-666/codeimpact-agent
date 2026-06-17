@@ -11,7 +11,7 @@ CodeImpact Agent takes a Python repo and a `git diff`, uses deterministic tools 
 From the project root:
 
 ```powershell
-cd C:\Users\29738\Desktop\agent\codeimpact-agent
+cd codeimpact-agent
 python -m pip install -e .
 ```
 
@@ -31,7 +31,7 @@ If the explicit LLM switch or API variables are absent, the demo still works wit
 Command:
 
 ```powershell
-python -m codeimpact analyze --repo C:\Users\29738\Desktop\github\rca --diff docs\rca_e677b29.diff
+python -m codeimpact analyze --repo <path-to-python-repo> --diff docs\rca_e677b29.diff
 ```
 
 What to point out:
@@ -102,7 +102,7 @@ Interview explanation:
 Command:
 
 ```powershell
-python -m codeimpact analyze-graph --repo C:\Users\29738\Desktop\github\rca --diff docs\rca_e677b29.diff
+python -m codeimpact analyze-graph --repo <path-to-python-repo> --diff docs\rca_e677b29.diff
 ```
 
 What to point out:

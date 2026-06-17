@@ -11,7 +11,7 @@ It is intentionally not a frontend app, PDF QA demo, or generic chatbot. The int
 Input:
 
 ```powershell
-python -m codeimpact analyze --repo C:\Users\29738\Desktop\github\rca --diff docs\rca_e677b29.diff
+python -m codeimpact analyze --repo <path-to-python-repo> --diff docs\rca_e677b29.diff
 ```
 
 Trimmed output:
@@ -109,8 +109,14 @@ Core design choices:
 ## Install
 
 ```powershell
-cd C:\Users\29738\Desktop\agent\codeimpact-agent
+cd codeimpact-agent
 python -m pip install -e .
+```
+
+Install the optional HTTP API dependencies:
+
+```powershell
+python -m pip install -e ".[api]"
 ```
 
 Optional LLM configuration:
@@ -127,13 +133,13 @@ $env:OPENAI_CHAT_MODEL="your-model"
 Run the direct analyzer:
 
 ```powershell
-python -m codeimpact analyze --repo C:\Users\29738\Desktop\github\rca --diff docs\rca_e677b29.diff
+python -m codeimpact analyze --repo <path-to-python-repo> --diff docs\rca_e677b29.diff
 ```
 
 Run the LangGraph workflow, including Memory recall/store and conditional routing:
 
 ```powershell
-python -m codeimpact analyze-graph --repo C:\Users\29738\Desktop\github\rca --diff docs\rca_e677b29.diff
+python -m codeimpact analyze-graph --repo <path-to-python-repo> --diff docs\rca_e677b29.diff
 ```
 
 Run the bundled evaluation harness:
@@ -176,6 +182,33 @@ Tools exposed:
 - `recall_memory(namespace, query, memory_type, limit)`
 
 The main MCP demo tool is `analyze_diff`: it runs the LangGraph workflow, including diff parsing, AST reverse dependency analysis, Memory recall/store, LLM/fallback risk assessment, and conditional routing. It returns the same structured report shape as the graph CLI path.
+
+## HTTP API
+
+Start the FastAPI service:
+
+```powershell
+uvicorn codeimpact.api:app --host 127.0.0.1 --port 8000
+```
+
+Endpoints:
+
+- `GET /health`
+- `POST /changed-files`
+- `POST /analyze`
+
+Example request:
+
+```powershell
+Invoke-RestMethod `
+  -Method Post `
+  -Uri http://127.0.0.1:8000/analyze `
+  -ContentType "application/json" `
+  -Body (@{
+    repo = "<path-to-python-repo>"
+    diff_path = "docs\rca_e677b29.diff"
+  } | ConvertTo-Json)
+```
 
 ## Why This Is an Agent Project
 

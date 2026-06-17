@@ -7,14 +7,14 @@ CodeImpact Agent is suitable for a resume as an Agent backend project, especiall
 The positioning should be conservative:
 
 - Good: "Python code change impact analysis Agent backend"
-- Good: "LangGraph + AST reverse dependency analysis + MCP tools + LLM/fallback risk assessment"
+- Good: "LangGraph + AST reverse dependency analysis + MCP/FastAPI interfaces + LLM/fallback risk assessment"
 - Avoid: "production-grade code review platform"
 - Avoid: "high-accuracy RAG system"
 - Avoid: "fully automated test generation"
 
 Current verification state:
 
-- Test suite: `23 passed, 2 warnings`
+- Test suite: `27 passed, 2 warnings`
 - Eval rows: `9`
 - `changed_file_hit_rate`: `1.0`
 - `related_file_hit_rate`: `0.6666666666666666`
@@ -100,14 +100,14 @@ CodeImpact Agent - Python Code Change Impact Analysis Agent Backend
 - Built a LangGraph state-machine workflow that turns git diff input into a structured impact report, including changed files, downstream related files, retrieved context, risk level, review focus, and test focus.
 - Implemented Python AST reverse dependency analysis to trace downstream import impact across a repository, with explicit handling for normal imports, relative imports, string-literal dynamic imports, and package re-exports.
 - Added SQLite/FTS5-BM25 context retrieval over code, tests, README, and docs, then fed retrieved evidence plus diff hunk summaries into an OpenAI-compatible LLM risk assessor with JSON structured output and deterministic fallback.
-- Exposed the backend through 6 FastMCP tools for MCP-compatible clients and provided a Typer CLI for local analysis, graph execution, and evaluation.
+- Exposed the backend through 6 FastMCP tools, a FastAPI HTTP service, and a Typer CLI for local analysis, graph execution, and evaluation.
 - Designed a 9-row regression eval harness covering diff parsing, dependency discovery, and context retrieval; results intentionally expose AST and lexical retrieval limitations rather than reporting fake-perfect scores.
 ```
 
 Short version:
 
 ```text
-Built CodeImpact Agent, a Python code-change impact analysis backend using LangGraph, FastMCP, Python AST, SQLite/FTS5-BM25, and OpenAI-compatible LLM risk assessment. The system parses git diffs, traces downstream imports, retrieves code/test/doc context, recalls prior analysis memory, and returns structured risk reports through CLI and MCP tools. Added a 9-row eval harness and pytest coverage for core paths.
+Built CodeImpact Agent, a Python code-change impact analysis backend using LangGraph, FastMCP, FastAPI, Python AST, SQLite/FTS5-BM25, and OpenAI-compatible LLM risk assessment. The system parses git diffs, traces downstream imports, retrieves code/test/doc context, recalls prior analysis memory, and returns structured risk reports through CLI, MCP tools, and HTTP API endpoints. Added a 9-row eval harness and pytest coverage for core paths.
 ```
 
 ## Do Not Write
@@ -135,9 +135,9 @@ The workflow now includes typed state, Memory before risk reasoning, report pers
 
 ### What would you improve next?
 
-1. Add CI, so tests run on every push.
-2. Expand eval from 9 rows to real repository commits with manually reviewed ground truth.
-3. Improve retrieval with better query construction or embeddings, then compare against the current lexical baseline.
+1. Expand eval from 9 rows to real repository commits with manually reviewed ground truth.
+2. Improve retrieval with better query construction or embeddings, then compare against the current lexical baseline.
+3. Add deployment notes for the FastAPI service and MCP server.
 4. Make MCP Memory storage configurable instead of module-level default SQLite.
 
 ## Final Recommendation

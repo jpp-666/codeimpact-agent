@@ -12,7 +12,7 @@ python -m pytest tests\codeimpact -q
 
 Result:
 
-- 23 passed
+- 27 passed
 - 2 warnings from external dependencies
 
 ## 2. Evaluation harness
@@ -48,14 +48,14 @@ Notes:
 
 Input:
 
-- Repo: `C:\Users\29738\Desktop\github\rca`
+- Repo: `<path-to-python-repo>`
 - Diff: `docs\rca_e677b29.diff`
 - Commit: `e677b29e57ba0988965270dec8ce44c7ca1a7bde`
 
 Command:
 
 ```powershell
-python -m codeimpact analyze --repo C:\Users\29738\Desktop\github\rca --diff docs\rca_e677b29.diff
+python -m codeimpact analyze --repo <path-to-python-repo> --diff docs\rca_e677b29.diff
 ```
 
 Observed output highlights:
@@ -69,7 +69,7 @@ Observed output highlights:
   - `tests/test_fault_conditioning.py`
   - `tests/test_router_learned.py`
 - `related_files` includes:
-  - `C:\Users\29738\Desktop\github\rca\src\baselines\__init__.py`
+  - `<path-to-python-repo>\src\baselines\__init__.py`
 - `risk_level` is `medium`
 - `risk_reasoning` is:
   - `AST found 1 reverse dependencies for the touched module(s); downstream tests should be prioritized.`
