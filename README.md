@@ -11,66 +11,65 @@ It is intentionally not a frontend app, PDF QA demo, or generic chatbot. The int
 Input:
 
 ```powershell
-python -m codeimpact analyze --repo <path-to-python-repo> --diff docs\rca_e677b29.diff
+python -m codeimpact analyze --repo data\eval\sample_repo --diff data\eval\sample_core.diff
 ```
 
-Trimmed output:
+With LLM credentials configured, trimmed output shape:
 
 ```json
 {
   "changed_files": [
-    "scripts/run_full_matrix.py",
-    "scripts/run_gate1_eval.py",
-    "scripts/train_router_v2.py",
-    "src/baselines/external.py",
-    "src/models/router.py",
-    "tests/test_fault_conditioning.py",
-    "tests/test_router_learned.py"
+    "pkg/core.py"
   ],
   "related_files": [
     {
-      "path": "<path-to-python-repo>\\src\\baselines\\__init__.py",
-      "reason": "reverse import dependency",
+      "path": "<repo>\\pkg\\service.py",
+      "module": "pkg.service",
+      "depth": 1
+    },
+    {
+      "path": "<repo>\\tests\\test_core.py",
+      "module": "tests.test_core",
       "depth": 1
     }
   ],
   "risk_level": "medium",
-  "risk_source": "fallback",
-  "risk_reasoning": "AST found 1 reverse dependencies for the touched module(s); downstream tests should be prioritized.",
+  "risk_source": "llm",
+  "risk_reasoning": "The change modifies core behavior used by downstream modules, so targeted unit and integration tests should be prioritized.",
   "test_focus": [
-    "Run tests covering `src/models/router.py`",
-    "Run downstream tests for modules that import the touched files."
+    "Test scenarios in `tests/test_core.py` that use `run()`.",
+    "Run downstream tests for modules that import `pkg.core`."
   ],
   "review_focus": [
-    "Inspect behavioral changes in `src/models/router.py`",
-    "Check whether changed symbols are part of an imported API used by related files."
+    "Inspect behavioral changes in `pkg/core.py`.",
+    "Check whether changed return values affect downstream consumers."
   ],
-  "confidence": 0.62,
+  "confidence": 0.8,
   "evidence": [
     {
-      "path": "src/models/router.py",
+      "path": "pkg/core.py",
       "change_type": "modified",
-      "added": ["..."],
-      "deleted": ["..."]
+      "added": ["return helper() + 2"],
+      "deleted": ["return helper() + 1"]
     }
   ],
   "retrieved_context": [
     {
-      "path": "tests/test_router_learned.py",
-      "chunk_type": "function",
-      "symbol": "test_router",
-      "score": 0.38,
-      "snippet": "..."
+      "path": "tests/test_core.py",
+      "chunk_type": "module",
+      "symbol": "test_core",
+      "score": 0.5033,
+      "snippet": "from pkg.core import run"
     }
   ],
   "context_sources": [
     "AST reverse dependency",
     "RAG retrieved code/test/doc context"
   ],
-  "retrieval_ms": 3.2,
+  "retrieval_ms": 6.3,
   "test_suggestions": [
-    "Run unit tests covering `src/models/router.py`",
-    "Run downstream regression tests for: <path-to-python-repo>\\src\\baselines\\__init__.py"
+    "Run unit tests covering `pkg/core.py`",
+    "Run downstream regression tests around `pkg.core` consumers."
   ]
 }
 ```
@@ -133,7 +132,7 @@ $env:OPENAI_CHAT_MODEL="your-model"
 Run the direct analyzer:
 
 ```powershell
-python -m codeimpact analyze --repo <path-to-python-repo> --diff docs\rca_e677b29.diff
+python -m codeimpact analyze --repo data\eval\sample_repo --diff data\eval\sample_core.diff
 ```
 
 Require a real LLM call for interview demos:
@@ -143,7 +142,7 @@ $env:CODEIMPACT_ENABLE_LLM="1"
 $env:OPENAI_API_BASE="https://api.example.com/v1"
 $env:OPENAI_API_KEY="<your-api-key>"
 $env:OPENAI_CHAT_MODEL="your-model"
-python -m codeimpact analyze --repo <path-to-python-repo> --diff docs\rca_e677b29.diff --require-llm
+python -m codeimpact analyze --repo data\eval\sample_repo --diff data\eval\sample_core.diff --require-llm
 ```
 
 With `--require-llm`, the command fails instead of silently using fallback when the model call is unavailable. A successful interview demo should show `"risk_source": "llm"`.
@@ -151,7 +150,7 @@ With `--require-llm`, the command fails instead of silently using fallback when 
 Run the LangGraph workflow, including Memory recall/store and conditional routing:
 
 ```powershell
-python -m codeimpact analyze-graph --repo <path-to-python-repo> --diff docs\rca_e677b29.diff
+python -m codeimpact analyze-graph --repo data\eval\sample_repo --diff data\eval\sample_core.diff
 ```
 
 Run the bundled evaluation harness:
@@ -218,7 +217,7 @@ Invoke-RestMethod `
   -ContentType "application/json" `
   -Body (@{
     repo = "<path-to-python-repo>"
-    diff_path = "docs\rca_e677b29.diff"
+    diff_path = "data\eval\sample_core.diff"
   } | ConvertTo-Json)
 ```
 
@@ -233,14 +232,11 @@ This is not just a script that calls an LLM once. The Agent behavior comes from 
 
 ## Verification
 
-See [docs/verification_evidence.md](docs/verification_evidence.md) for reproducible commands and outputs, including:
+Reproducible checks:
 
-- test-suite command
-- evaluation output
-- a real repository analysis case
-- an example LLM-backed risk reasoning sample
-
-For an interview walkthrough, use [docs/demo_script.md](docs/demo_script.md). For conservative resume wording, use [docs/resume_package_zh.md](docs/resume_package_zh.md).
+- `python -m pytest tests\codeimpact -q`
+- `python -m codeimpact evaluate --csv-path data\eval\sample.csv`
+- `python -m codeimpact analyze --repo data\eval\sample_repo --diff data\eval\sample_core.diff --require-llm` when LLM credentials are configured
 
 ## Scope and Known Limits
 
